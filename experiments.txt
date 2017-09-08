@@ -1,0 +1,25 @@
+Best parameter values:
+
+                       house_votes      spambase_bool    spambase    optdigits
+naive Bayes            m=1              m=1              m=1/10/100  m=1/10
+k nearest neighbors    k=3              k=3/4            k=4         k=1
+support vector machine ker=sigmoid      ker=linear       ker=linear  ker=poly
+
+
+
+Test set accuracy with best parameters (80/20 random split):
+
+                       house_votes      spambase_bool    spambase    optdigits
+naive Bayes            0.874            0.878            0.634       0.567
+k nearest neighbors    0.924            0.894		     0.874		 0.979
+support vector machine 0.954            0.926            0.937       0.986
+
+
+
+Observations: When was each algorithm most/least successful? Can you explain any of these differences? Do the best parameters make sense?
+
+kNN was most accurate for optdigits and house_votes and usually required up to k=4 for each algorithm. This makes sense because there's a tradeoff for a larger k value when too many neighbors are expanded. This is because the number of labels predicted usually doesn't exceed 4 so there is diminishing returns. Optdigits and house_votes played to kNN's strengths in that distances between points helped to determine the predicted output.
+
+The Naive Bayes classifier was most accurate during spambase bool which is expected because of the probabilities associated and when the number of equiv_samples was lower. This is because using fewer samples distributed over an expected prior allowed the classifier to more quickly learn based on the actual probability of the feature distribution over the given labels, vs. an expected regular split. The best parameters make sense given this.
+
+SVM was most accurate with optdigits and required different kernels for each of the data sets. The parameters do make sense. A linear classification works for boolean because of the black/white nature of True/False and for spambase because of the apparent correlations of variables. Polynomial did the best for optdigits because of the nature of the features and assigning variables to them, and optdigits was the best performance from svm. The house votes dataset seems reasonable for sigmoid kernel functions to work best because of the behavior of voting and there being moderates such that it fits the sigmoid function. 
